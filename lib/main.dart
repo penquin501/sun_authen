@@ -94,6 +94,7 @@ Widget emailTextField() {
 
 Widget passwordTextField() {
   return TextFormField(
+    obscureText: true,  //ซ่อนรหัสผ่าน
     decoration:
         InputDecoration(labelText: 'Password:', hintText: 'more 5 letters'),
   );
