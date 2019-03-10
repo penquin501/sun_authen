@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' show get;
+import 'dart:convert'; //convertพวกตัวแปรvar ได้
+import '../main.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -58,7 +61,21 @@ class _RegisterState extends State<Register> {
     print(formKey.currentState.validate());
     formKey.currentState.save();
     print('Name = $nameString, Email=$emailString, Password=$passwordString');
-    
+    sendNewUserToServer(nameString, emailString, passwordString);
+  }
+
+  void sendNewUserToServer(String uName, String uEmail, String uPass) async {
+    String url =
+        'http://androidthai.in.th/sun/addDataNatt.php?isAdd=true&Name=$uName&Email=$uEmail&Password=$uPass';
+    var response = await get(url); //Var เป็นตัวแปรชนิดอะไรก็ได้
+    var result = json.decode(response.body);
+    print('result=>$result');
+
+    if (result.toString() == 'true') {
+      print('Back Process');
+      Navigator.pop(context); //เรียกหน้าย้อนหลัง
+
+    }
   }
 
   Widget nameTextField() {
