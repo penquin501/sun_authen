@@ -97,8 +97,7 @@ class _RegisterState extends State<Register> {
       decoration:
           InputDecoration(labelText: 'E-mail', hintText: 'abc@email.com'),
       validator: (String value) {
-        if (!value.contains(
-            '@')) //เช็คหา @ ใน Email ตัวนี้ลองใช้เอง (value.indexOf('@') == -1)
+        if (!value.contains('@')) //เช็คหา @ ใน Email ตัวนี้ลองใช้เอง (value.indexOf('@') == -1)
         {
           return 'Please input correct Email';
         }

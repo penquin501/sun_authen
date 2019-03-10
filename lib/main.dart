@@ -21,110 +21,126 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final formKey = GlobalKey<FormState>(); //ตัวแปร Key ใช้เช็ค validate
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: <Widget>[
-          Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(top: 50.0),
-            child: logoShow(),
-          ),
-          Container(
-            alignment: Alignment.center,
-            child: titleApp(),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 30.0, right: 30.0),
-            child: emailTextField(),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 20.0),
-            child: passwordTextField(),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 50.0, right: 50.0),
-            child: Row(
-              children: <Widget>[
-                new Expanded(
-                  child: Container(
-                    child: signInButton(),
-                  ),
-                ),
-                new Expanded(
-                  child: Container(
-                    child: signUpButton(context),
-                  ),
-                )
-              ],
+      body: Form(
+        child: ListView(
+          key: formKey,
+          children: <Widget>[
+            Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(top: 50.0),
+              child: logoShow(),
             ),
-          ),
-        ],
+            Container(
+              alignment: Alignment.center,
+              child: titleApp(),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 30.0, right: 30.0),
+              child: emailTextField(),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 20.0),
+              child: passwordTextField(),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 50.0, right: 50.0),
+              child: Row(
+                children: <Widget>[
+                  new Expanded(
+                    child: Container(
+                      child: signInButton(),
+                    ),
+                  ),
+                  new Expanded(
+                    child: Container(
+                      child: signUpButton(context),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
-}
 
-Widget testText() {
-  return Text('testText');
-}
+  Widget testText() {
+    return Text('testText');
+  }
 
-Widget logoShow() {
-  return Image.asset('images/logo.png');
-}
+  Widget logoShow() {
+    return Image.asset('images/logo.png');
+  }
 
-Widget titleApp() {
-  return Text(
-    'Sun Authen',
-    style: TextStyle(
-        fontSize: 30.0,
-        fontFamily: 'Hind',
-        fontWeight: FontWeight.bold,
-        color: Colors.lightBlue[700]),
-  );
-}
+  Widget titleApp() {
+    return Text(
+      'Sun Authen',
+      style: TextStyle(
+          fontSize: 30.0,
+          fontFamily: 'Hind',
+          fontWeight: FontWeight.bold,
+          color: Colors.lightBlue[700]),
+    );
+  }
 
-Widget emailTextField() {
-  return TextFormField(
-    decoration: InputDecoration(
-        labelText: 'Email Address:', hintText: 'youremail@Email.com'),
-  );
-}
+  Widget emailTextField() {
+    return TextFormField(
+      decoration: InputDecoration(
+          labelText: 'Email Address:', hintText: 'youremail@Email.com'),
+      validator: (String urEmail) {
+        if (!urEmail.contains('@')) {
+          return 'Please input correct Email';
+        }
+      },
+    );
+  }
 
-Widget passwordTextField() {
-  return TextFormField(
-    obscureText: true,  //ซ่อนรหัสผ่าน
-    decoration:
-        InputDecoration(labelText: 'Password:', hintText: 'more 5 letters'),
-  );
-}
+  Widget passwordTextField() {
+    return TextFormField(
+      obscureText: true, //ซ่อนรหัสผ่าน
+      decoration:
+          InputDecoration(labelText: 'Password:', hintText: 'more 5 letters'),
+      validator: (String urPass) {
+        if (urPass.length <= 5) {
+          return 'Your password must more than 5 letters';
+        }
+      },
+    );
+  }
 
-Widget signInButton() {
-  return RaisedButton(
-    color: Colors.lightBlue[400],
-    child: Text(
-      'Sign in',
-      style: TextStyle(color: Colors.white),
-    ),
-    onPressed: () {
-      print('You Click Sign In');
-    },
-  );
-}
+  Widget signInButton() {
+    return RaisedButton(
+      color: Colors.lightBlue[400],
+      child: Text(
+        'Sign in',
+        style: TextStyle(color: Colors.white),
+      ),
+      onPressed: () {
+        print('You Click Sign In');
+        print(formKey.currentState.validate());
+      },
+    );
+  }
 
-Widget signUpButton(BuildContext context) {
-  return RaisedButton(
-    color: Colors.lightBlue[200],
-    child: Text(
-      'Sign up',
-      style: TextStyle(color: Colors.white70),
-    ),
-    onPressed: () {
-      print('You Click Sign Up');
-      var myRoute =
-          new MaterialPageRoute(builder: (BuildContext context) => Register());
-      Navigator.of(context).push(myRoute);
-    },
-  );
-}
+  Widget signUpButton(BuildContext context) {
+    return RaisedButton(
+      color: Colors.lightBlue[200],
+      child: Text(
+        'Sign up',
+        style: TextStyle(color: Colors.white70),
+      ),
+      onPressed: () {
+        print('You Click Sign Up');
+        var myRoute = new MaterialPageRoute(
+            builder: (BuildContext context) => Register());
+        Navigator.of(context).push(myRoute);
+      },
+    );
+  }
+} //_Homepage
